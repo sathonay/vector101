@@ -26,8 +26,21 @@
 	};
 
 	function drawInfos() {
+		ctx.font = "1.5rem serif";
 		var yoffset = 0;
-		ctx.font = "25px serif";
+		ctx.fillText("Drag left click: move blue vector direction", 
+			0, 
+			(yoffset += 25)
+		);
+		ctx.fillText("Drag right click: move blue vector direction", 
+			0, 
+			(yoffset += 25)
+		);
+		ctx.fillText("CTRL + Drag right click: both vector origine", 
+			0, 
+			(yoffset += 25)
+		);
+		var yoffset = 0;
 		var va = vector(vecA);
 		var vb = vector(vecB);
 		ctx.fillText("blue vec: x: " + va.x + " y: " + va.y, 
