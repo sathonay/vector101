@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cross product viewer</title>
+</head>
+<body>
+<canvas id="canva"></canvas>
+<script src="utils.js"></script>
+<script>
+	let vecA = {
+		x1: canva.width / 2,
+		y1: canva.height / 2,
+		x2: canva.width / 2,
+		y2: canva.height / 2 - 100,
+		color: "blue"
+	};
+
+	let vecB = {
+		x1: canva.width / 2,
+		y1: canva.height / 2,
+		x2: canva.width / 2 + 100,
+		y2: canva.height / 2,
+		color: "red"
+	};
+
+	function drawInfos() {
+		var yoffset = 0;
+		ctx.font = "25px serif";
+		var va = vector(vecA);
+		var vb = vector(vecB);
+		ctx.fillText("blue vec: x: " + va.x + " y: " + va.y, 
+			canva.width / 2, 
+			canva.height / 2  + (yoffset += 25)
+		);
+		ctx.fillText("red vec: x: " + va.x + " y: " + va.y, 
+			canva.width / 2, 
+			canva.height / 2  + (yoffset += 25)
+		);
+		ctx.fillText("cross product: " + cross(va, vb), 
+			canva.width / 2, 
+			canva.height / 2  + (yoffset += 25)
+		);
+	}
+
+	function render() {
+		console.log("render");
+		clearCanva();
+		drawVector(vecA);
+		drawVector(vecB);
+		drawInfos();
+	}
+
+	window.addEventListener("resize", (event) => {
+		fullScreenCanva();
+		render();
+	})
+
+	window.addEventListener("load", (event) => {
+		fullScreenCanva();
+		render();
+	});
+
+	canva.addEventListener('contextmenu', (event) => {
+		event.preventDefault()
+		render();
+	});
+
+	canva.addEventListener("mouseup", (event) => {
+		render();
+	})
+
+	canva.addEventListener("mousemove", (event) => {
+		if (event.ctrlKey && event.buttons == 1) {
+			vecA.x1 = event.clientX;
+			vecA.y1 = event.clientY;
+			vecB.x1 = event.clientX;
+			vecB.y1 = event.clientY;
+		}
+		if (!event.ctrlKey && event.buttons == 1) {
+			vecA.x2 = event.clientX;
+			vecA.y2 = event.clientY;
+		}
+		if (!event.ctrlKey && event.buttons == 2) {
+			vecB.x2 = event.clientX;
+			vecB.y2 = event.clientY;
+		}
+		render();
+	});
+</script>
+</body>
+</html>
